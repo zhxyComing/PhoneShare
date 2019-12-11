@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBackgroundBlack">#424242</color>
+    <color name="colorBackgroundGray">#E0E0E0</color>
+
+    <color name="colorTextTitleBlack">#212121</color>
+    <color name="colorTextContentBlack">#757575</color>
+    <color name="colorTextContentGray">#E0E0E0</color>
+    <color name="colorTextContentBlue">#64B5F6</color>
+    <color name="colorTextContentBlueLight">#03A9F4</color>
+
+    <color name="colorSymbolRed">#D50000</color>
+    <color name="colorSymbolGreen">#43A047</color>
+    <color name="colorSymbolBlue">#03A9F4</color>
+
+    <color name="transparent">#00000000</color>
+
+</resources>
