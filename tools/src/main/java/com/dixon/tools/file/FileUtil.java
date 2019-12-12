@@ -2,12 +2,19 @@ package com.dixon.tools.file;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
+
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class FileUtil {
@@ -77,5 +84,78 @@ public class FileUtil {
         }
         cursor.close();
         return resultList;
+    }
+
+    public static void openImage(Context context, String path) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        File file = new File(path);     // path 是外部存储中的一个图片的路径
+        Uri uri;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            uri = Uri.fromFile(file);
+        } else {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            uri = FileProvider.getUriForFile(context, context.getPackageName() + ".file_provider", file);
+        }
+        intent.setDataAndType(uri, "image/*");
+        context.startActivity(Intent.createChooser(intent, null));
+    }
+
+    public static void openVideo(Context context, String path) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        File file = new File(path);     // path 是外部存储中的一个图片的路径
+        Uri uri;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            uri = Uri.fromFile(file);
+        } else {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            uri = FileProvider.getUriForFile(context, context.getPackageName() + ".file_provider", file);
+        }
+        intent.setDataAndType(uri, "video/*");
+        context.startActivity(Intent.createChooser(intent, null));
+    }
+
+    public static List<File> getFileList(String path) {
+        ArrayList<File> arrayList = new ArrayList<>();
+        File file = new File(path);
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                Collections.addAll(arrayList, files);
+            }
+        }
+        Collections.sort(arrayList, new FileNameComparator());
+        return arrayList;
+    }
+
+    public static String getSDPath() {
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState()
+                .equals(android.os.Environment.MEDIA_MOUNTED);//判断sd卡是否存在
+        if (sdCardExist) {
+            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+        }
+        if (sdDir != null) {
+            return sdDir.toString();
+        }
+        return "";
+    }
+
+    public static String getSuffix(String fileName) {
+        if (fileName.contains(".")) {
+            String[] split = fileName.split("\\.");
+            String suffix = split[split.length - 1];
+            return suffix;
+        }
+        return "";
+    }
+
+    private static final class FileNameComparator implements Comparator<File> {
+
+        @Override
+        public int compare(File o1, File o2) {
+            return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+        }
     }
 }

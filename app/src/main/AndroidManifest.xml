@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".videofun.activity.VideoUploadActivity"></activity>
+        <activity android:name=".filefun.FileUploadActivity"></activity>
+        <activity android:name=".imgfun.activity.ImageViewerActivity" />
+        <activity android:name=".videofun.activity.VideoUploadActivity" />
         <activity android:name=".imgfun.activity.ImageUploadActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
@@ -22,7 +24,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- Android 7.0适配 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

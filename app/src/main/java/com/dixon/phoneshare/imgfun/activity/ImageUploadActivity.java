@@ -1,7 +1,6 @@
 package com.dixon.phoneshare.imgfun.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +15,6 @@ import com.dixon.tools.SizeFormat;
 import com.dixon.tools.file.ImageItem;
 import com.dixon.tools.file.FileUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,11 +101,10 @@ public class ImageUploadActivity extends BaseActivity implements View.OnClickLis
 
     }
 
-    // todo 不能用 7.0uri做了限制
     private void openImage(String path) {
-//        Intent intent = new Intent(Intent.ACTION_VIEW);
-//        Uri uri = Uri.fromFile(new File(path));
-//        intent.setDataAndType(uri, "image/*");
-//        startActivity(intent);
+        Intent intent = new Intent(ImageUploadActivity.this, ImageViewerActivity.class);
+        intent.putExtra("path", path);
+        startActivity(intent);
+//        FileUtil.openImage(this, path);
     }
 }

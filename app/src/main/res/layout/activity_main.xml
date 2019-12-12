@@ -95,6 +95,7 @@
 
     <!--文件-->
     <LinearLayout
+        android:id="@+id/am_ll_file_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

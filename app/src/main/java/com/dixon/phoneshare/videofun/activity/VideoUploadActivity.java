@@ -53,7 +53,19 @@ public class VideoUploadActivity extends BaseActivity implements View.OnClickLis
             }
         });
 
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                openVideo(mAdapter.getItems().get(position).getBean().getFilePath());
+                return true;
+            }
+        });
+
         mUploadView.setOnClickListener(this);
+    }
+
+    private void openVideo(String filePath) {
+        FileUtil.openVideo(this, filePath);
     }
 
     private void notifyUploadData() {

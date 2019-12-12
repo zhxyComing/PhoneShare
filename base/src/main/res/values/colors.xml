@@ -2,6 +2,7 @@
 <resources>
     <color name="colorBackgroundBlack">#424242</color>
     <color name="colorBackgroundGray">#E0E0E0</color>
+    <color name="colorBackgroundGrayLight">#F0F0F0</color>
 
     <color name="colorTextTitleBlack">#212121</color>
     <color name="colorTextContentBlack">#757575</color>
