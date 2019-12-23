@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".PhoneShareApplication"
@@ -14,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".filefun.FileUploadActivity"></activity>
+        <activity android:name=".DownloadTempActivity"></activity>
+        <activity android:name=".filefun.FileUploadActivity" />
         <activity android:name=".imgfun.activity.ImageViewerActivity" />
         <activity android:name=".videofun.activity.VideoUploadActivity" />
         <activity android:name=".imgfun.activity.ImageUploadActivity" />

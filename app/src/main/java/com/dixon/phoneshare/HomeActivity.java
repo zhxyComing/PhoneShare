@@ -19,7 +19,7 @@ import com.dixon.tools.Toast;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
-    private LinearLayout mImgTabView, mVideoTabView, mFileTabView;
+    private LinearLayout mImgTabView, mVideoTabView, mFileTabView, mDownloadTabView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mImgTabView.setOnClickListener(this);
         mVideoTabView.setOnClickListener(this);
         mFileTabView.setOnClickListener(this);
+        mDownloadTabView.setOnClickListener(this);
     }
 
     @Override
@@ -38,6 +39,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mImgTabView = findViewById(R.id.am_ll_img_tab);
         mVideoTabView = findViewById(R.id.am_ll_video_tab);
         mFileTabView = findViewById(R.id.am_ll_file_tab);
+        mDownloadTabView = findViewById(R.id.am_ll_download_tab);
     }
 
     /**
@@ -89,6 +91,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.am_ll_file_tab:
                 startActivity(new Intent(HomeActivity.this, FileUploadActivity.class));
+                break;
+            case R.id.am_ll_download_tab:
+                startActivity(new Intent(HomeActivity.this, DownloadTempActivity.class));
                 break;
         }
     }

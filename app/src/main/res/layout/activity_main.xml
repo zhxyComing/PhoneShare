@@ -18,10 +18,15 @@
         android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
-        <ImageView
+        <TextView
             android:layout_width="120dp"
             android:layout_height="140dp"
-            android:background="@color/colorBackgroundGray" />
+            android:background="@color/colorSymbolGreen"
+            android:gravity="center"
+            android:text="图"
+            android:textColor="@android:color/white"
+            android:textSize="38sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +40,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:text="图片"
+                android:text="图片上传"
                 android:textColor="@color/colorTextTitleBlack"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -61,10 +66,15 @@
         android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
-        <ImageView
+        <TextView
             android:layout_width="120dp"
             android:layout_height="140dp"
-            android:background="@color/colorBackgroundGray" />
+            android:background="@color/colorSymbolBlue"
+            android:gravity="center"
+            android:text="视"
+            android:textColor="@android:color/white"
+            android:textSize="38sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,7 +88,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:text="视频"
+                android:text="视频上传"
                 android:textColor="@color/colorTextTitleBlack"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -104,10 +114,15 @@
         android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
-        <ImageView
+        <TextView
             android:layout_width="120dp"
             android:layout_height="140dp"
-            android:background="@color/colorBackgroundGray" />
+            android:background="@color/colorSymbolRedLight"
+            android:gravity="center"
+            android:text="文"
+            android:textColor="@android:color/white"
+            android:textSize="38sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +136,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:text="文件"
+                android:text="文件上传"
                 android:textColor="@color/colorTextTitleBlack"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -132,6 +147,54 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="1dp"
                 android:background="@color/colorSymbolRed" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--下载-->
+    <LinearLayout
+        android:id="@+id/am_ll_download_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:background="@color/colorBackgroundGray"
+            android:gravity="center"
+            android:text="下"
+            android:textColor="@android:color/white"
+            android:textSize="38sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="下载 Temp"
+                android:textColor="@color/colorBackgroundGray"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="1dp"
+                android:background="@color/colorBackgroundGray" />
         </LinearLayout>
 
     </LinearLayout>
