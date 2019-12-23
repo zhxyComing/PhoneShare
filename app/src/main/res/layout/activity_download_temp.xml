@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:singleLine="true"
-        android:text="/storage/emulated/0/" />
+        android:text="" />
 
     <TextView
         android:id="@+id/adt_tv_download_btn"
@@ -36,6 +36,13 @@
 
     <TextView
         android:id="@+id/adt_tv_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="未开始" />
+
+    <TextView
+        android:id="@+id/adt_tv_speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

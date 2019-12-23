@@ -1,8 +1,11 @@
 package com.dixon.base.transmission;
 
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.dixon.tools.SizeFormat;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -91,7 +94,7 @@ public class ClientNetUtil {
      * @param listener
      */
     public static void download(final String url, final String saveDir, final OnProgressChangedListener listener) {
-        Request request = new Request.Builder().url(url).build();
+        Request request = new Request.Builder().url(url).addHeader("Accept-Encoding", "identity").build();
         sClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -113,12 +116,28 @@ public class ClientNetUtil {
                     File file = new File(savePath, getNameFromUrl(url));
                     fos = new FileOutputStream(file);
                     long sum = 0;
+                    long startTime = 0;
+                    long disSum = 0;
                     while ((len = is.read(buf)) != -1) {
                         fos.write(buf, 0, len);
                         sum += len;
-                        int progress = (int) (sum * 1.0f / total * 100);
+                        int progress = (int) (sum * 100f / total);
+                        Log.e("ClientNetUtil", "sum = " + sum + " total = " + total);
+                        Log.e("ClientNetUtil", "progress = " + progress);
                         // 下载中
-                        listener.onProgress(progress);
+                        if (total == -1) { //有时候返回-1...
+                            listener.onProcess("目前已下载：" + SizeFormat.format(sum));
+                        } else {
+                            listener.onProgress(progress);
+                        }
+                        long nowTime = System.currentTimeMillis();
+                        // 3s计算一次下载速度
+                        if (nowTime - startTime > 3000) {
+                            long secondSpeed = (sum - disSum) / 3;
+                            listener.onSpeedProgress(SizeFormat.format(secondSpeed));
+                            disSum = sum;
+                            startTime = nowTime;
+                        }
                     }
                     fos.flush();
                     // 下载完成
@@ -145,9 +164,13 @@ public class ClientNetUtil {
 
         void onProgress(int progress);
 
+        void onProcess(String message);
+
         void onFail(Exception e);
 
         void onSuccess();
+
+        void onSpeedProgress(String speed);
     }
 
     /**

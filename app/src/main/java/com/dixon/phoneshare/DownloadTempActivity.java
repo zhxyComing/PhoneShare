@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import com.dixon.base.transmission.ClientNetUtil;
 public class DownloadTempActivity extends AppCompatActivity {
 
     private EditText etDownloadUrl, etSaveUrl;
-    private TextView tvDownloadBtn, tvProgress;
+    private TextView tvDownloadBtn, tvProgress, tvSpeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class DownloadTempActivity extends AppCompatActivity {
                 String downloadUrl = etDownloadUrl.getText().toString();
                 String saveUrl = etSaveUrl.getText().toString();
                 // todo ? URLEncode?
-                if (!TextUtils.isEmpty(downloadUrl) && !TextUtils.isEmpty(saveUrl)) {
+                if (!TextUtils.isEmpty(downloadUrl)) {
                     ClientNetUtil.download(downloadUrl, saveUrl, new ClientNetUtil.OnProgressChangedListener() {
                         @Override
                         public void onProgress(final int progress) {
@@ -34,6 +35,16 @@ public class DownloadTempActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     tvProgress.setText(progress + "%");
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onProcess(final String message) {
+                            tvProgress.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvProgress.setText(message);
                                 }
                             });
                         }
@@ -57,6 +68,16 @@ public class DownloadTempActivity extends AppCompatActivity {
                                 }
                             });
                         }
+
+                        @Override
+                        public void onSpeedProgress(final String speed) {
+                            tvProgress.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvSpeed.setText("下载速度 " + speed + "/s");
+                                }
+                            });
+                        }
                     });
                 }
             }
@@ -70,5 +91,6 @@ public class DownloadTempActivity extends AppCompatActivity {
         etSaveUrl = findViewById(R.id.adt_et_save_url);
         tvDownloadBtn = findViewById(R.id.adt_tv_download_btn);
         tvProgress = findViewById(R.id.adt_tv_progress);
+        tvSpeed = findViewById(R.id.adt_tv_speed);
     }
 }
