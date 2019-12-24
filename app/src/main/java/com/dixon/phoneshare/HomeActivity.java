@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.dixon.base.BaseActivity;
 import com.dixon.phoneshare.dialog.DialogUtil;
 import com.dixon.phoneshare.download.linkdown.LinkDownloadActivity;
+import com.dixon.phoneshare.download.pathdown.PathDownloadActivity;
 import com.dixon.phoneshare.upload.filefun.FileUploadActivity;
 import com.dixon.phoneshare.upload.imgfun.activity.ImageUploadActivity;
 import com.dixon.phoneshare.upload.videofun.activity.VideoUploadActivity;
@@ -20,7 +21,7 @@ import com.dixon.tools.Toast;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
-    private LinearLayout mImgTabView, mVideoTabView, mFileTabView, mDownloadTabView;
+    private LinearLayout mImgTabView, mVideoTabView, mFileTabView, mDownloadLinkTabView, mDownloadPathTabView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mImgTabView.setOnClickListener(this);
         mVideoTabView.setOnClickListener(this);
         mFileTabView.setOnClickListener(this);
-        mDownloadTabView.setOnClickListener(this);
+        mDownloadLinkTabView.setOnClickListener(this);
+        mDownloadPathTabView.setOnClickListener(this);
     }
 
     @Override
@@ -40,7 +42,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mImgTabView = findViewById(R.id.am_ll_img_tab);
         mVideoTabView = findViewById(R.id.am_ll_video_tab);
         mFileTabView = findViewById(R.id.am_ll_file_tab);
-        mDownloadTabView = findViewById(R.id.am_ll_download_tab);
+        mDownloadLinkTabView = findViewById(R.id.am_ll_download_link_tab);
+        mDownloadPathTabView = findViewById(R.id.am_ll_download_path_tab);
     }
 
     /**
@@ -93,8 +96,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             case R.id.am_ll_file_tab:
                 startActivity(new Intent(HomeActivity.this, FileUploadActivity.class));
                 break;
-            case R.id.am_ll_download_tab:
+            case R.id.am_ll_download_link_tab:
                 startActivity(new Intent(HomeActivity.this, LinkDownloadActivity.class));
+                break;
+            case R.id.am_ll_download_path_tab:
+                startActivity(new Intent(HomeActivity.this, PathDownloadActivity.class));
                 break;
         }
     }

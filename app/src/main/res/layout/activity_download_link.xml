@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".download.linkdown.LinkDownloadActivity">
+
+    <EditText
+        android:id="@+id/adt_et_download_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edit_input"
+        android:hint="下载地址"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp"
+        android:singleLine="true"
+        android:textColor="@color/colorTextTitleBlack"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/adt_et_save_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_edit_input"
+        android:hint="保存地址"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="@color/colorTextTitleBlack"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/adt_tv_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorBackgroundBlack"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="0k/s"
+        android:textColor="@android:color/white"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/adt_tv_process"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进度"
+            android:textColor="@color/colorBackgroundBlack"
+            android:textSize="14sp" />
+
+        <ProgressBar
+            android:id="@+id/adt_pb_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:max="100"
+            android:progress="50" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/adt_tv_download_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorSymbolBlue"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="下载"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>

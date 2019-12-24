@@ -1,88 +1,100 @@
 package com.dixon.phoneshare.download.linkdown;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.dixon.base.BaseActivity;
+import com.dixon.base.api.ApiService;
 import com.dixon.base.transmission.ClientNetUtil;
 import com.dixon.phoneshare.R;
+import com.dixon.tools.Toast;
 
-public class LinkDownloadActivity extends AppCompatActivity {
+public class LinkDownloadActivity extends BaseActivity {
 
     private EditText etDownloadUrl, etSaveUrl;
-    private TextView tvDownloadBtn, tvProgress, tvSpeed;
+    private TextView tvDownloadBtn, tvSpeed, tvProcess;
+    private ProgressBar pbProgress;
+    private boolean isDownloadRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download_temp);
+        setContentView(R.layout.activity_download_link);
 
-        tvDownloadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String downloadUrl = etDownloadUrl.getText().toString();
-                String saveUrl = etSaveUrl.getText().toString();
-                // todo ? URLEncode?
-                if (!TextUtils.isEmpty(downloadUrl)) {
-                    ClientNetUtil.download(downloadUrl, saveUrl, new ClientNetUtil.OnProgressChangedListener() {
-                        @Override
-                        public void onProgress(final int progress) {
-                            tvProgress.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tvProgress.setText(progress + "%");
-                                }
-                            });
-                        }
+        initView();
+        tvDownloadBtn.setOnClickListener(downloadClick);
+    }
 
-                        @Override
-                        public void onProcess(final String message) {
-                            tvProgress.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tvProgress.setText(message);
-                                }
-                            });
-                        }
+    private void initView() {
+        etDownloadUrl.setText(String.format("%s%s?path=", ApiService.API_HOST, ApiService.API_DOWNLOAD));
+        pbProgress.setProgress(0);
+        tvProcess.setText("0%");
+    }
 
-                        @Override
-                        public void onFail(final Exception e) {
-                            tvProgress.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tvProgress.setText("下载失败 " + e.toString());
-                                }
-                            });
-                        }
+    private View.OnClickListener downloadClick = v -> {
+        if (isDownloadRun) {
+            Toast.show(this, "当前已有任务在运行，请稍后...");
+            return;
+        }
+        String downloadUrl = etDownloadUrl.getText().toString();
+        String saveUrl = etSaveUrl.getText().toString();
+        if (!TextUtils.isEmpty(downloadUrl)) {
+            onDownloadStart();
+            try {
+                ClientNetUtil.download(downloadUrl, saveUrl, new ClientNetUtil.OnProgressChangedListener() {
+                    @Override
+                    public void onProgress(int progress) {
+                        pbProgress.setProgress(progress);
+                        tvProcess.setText(progress + "%");
+                    }
 
-                        @Override
-                        public void onSuccess() {
-                            tvProgress.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tvProgress.setText("下载完成");
-                                }
-                            });
-                        }
+                    @Override
+                    public void onProcess(final String message) {
+                        tvProcess.setText(message);
+                    }
 
-                        @Override
-                        public void onSpeedProgress(final String speed) {
-                            tvProgress.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tvSpeed.setText("下载速度 " + speed + "/s");
-                                }
-                            });
-                        }
-                    });
-                }
+                    @Override
+                    public void onFail(final Exception e) {
+                        tvProcess.setText(String.format("下载失败 %s", e.toString()));
+                        onDownloadFinish();
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        tvProcess.setText("下载完成");
+                        onDownloadFinish();
+                    }
+                }, new ClientNetUtil.SpeedMonitor() {
+
+                    // 2s计算一次下载速度
+                    @Override
+                    public long timeInterval() {
+                        return 2000;
+                    }
+
+                    @Override
+                    public void onSpeedChanged(String speed) {
+                        tvSpeed.setText(String.format("下载速度 %s", speed));
+                    }
+                });
+            } catch (Exception e) {
+                Toast.show(this, "错误：" + e.toString());
             }
-        });
+        } else {
+            Toast.show(this, "请检查你的输入是否正确");
+        }
+    };
+
+    private void onDownloadFinish() {
+        isDownloadRun = false;
+    }
+
+    private void onDownloadStart() {
+        isDownloadRun = true;
     }
 
     @Override
@@ -91,7 +103,8 @@ public class LinkDownloadActivity extends AppCompatActivity {
         etDownloadUrl = findViewById(R.id.adt_et_download_url);
         etSaveUrl = findViewById(R.id.adt_et_save_url);
         tvDownloadBtn = findViewById(R.id.adt_tv_download_btn);
-        tvProgress = findViewById(R.id.adt_tv_progress);
+        pbProgress = findViewById(R.id.adt_pb_progress);
         tvSpeed = findViewById(R.id.adt_tv_speed);
+        tvProcess = findViewById(R.id.adt_tv_process);
     }
 }

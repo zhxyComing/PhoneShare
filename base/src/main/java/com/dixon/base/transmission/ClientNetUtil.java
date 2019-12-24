@@ -4,6 +4,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.dixon.base.HandlerUtil;
 import com.dixon.tools.SizeFormat;
@@ -65,7 +66,7 @@ public class ClientNetUtil {
         final Request request = new Request.Builder().url(url).post(ProgressHelper.addProgressRequestListener(requestBody, new UIProgressRequestListener() {
             @Override
             public void onUIRequestProgress(long bytesWrite, long contentLength, boolean done) {
-                int progress = (int) (bytesWrite * 1.0f / contentLength * 100);
+                int progress = (int) (bytesWrite * 100f / contentLength);
                 listener.onProgress(progress);
             }
         })).build();
@@ -90,19 +91,21 @@ public class ClientNetUtil {
      * 第一个链接的方案会永久添加拦截器，即使download完毕及时删除拦截器，也存在多线程下载拦截器干扰的问题。
      * 所以使用下面的方式。
      *
-     * @param url
-     * @param saveDir
-     * @param listener
+     * @param url          下载的url
+     * @param saveDir      保存到的路径 会自动拼接根目录
+     * @param listener     进度监听 不能为空
+     * @param speedMonitor 下载速度监听 可为空
      */
-    public static void download(final String url, final String saveDir, final OnProgressChangedListener listener) {
+    public static void download(final String url,
+                                final String saveDir,
+                                @NonNull final OnProgressChangedListener listener,
+                                @Nullable final SpeedMonitor speedMonitor) {
         Request request = new Request.Builder().url(url).addHeader("Accept-Encoding", "identity").build();
         sClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 // 下载失败
-                HandlerUtil.runOnUiThread(() ->{
-                    listener.onFail(e);
-                });
+                HandlerUtil.runOnUiThread(() -> listener.onFail(e));
             }
 
             @Override
@@ -119,44 +122,38 @@ public class ClientNetUtil {
                     File file = new File(savePath, getNameFromUrl(url));
                     fos = new FileOutputStream(file);
                     long sum = 0;
-                    long startTime = 0;
-                    long disSum = 0;
                     while ((len = is.read(buf)) != -1) {
                         fos.write(buf, 0, len);
                         sum += len;
                         int progress = (int) (sum * 100f / total);
                         Log.e("ClientNetUtil", "sum = " + sum + " total = " + total);
                         Log.e("ClientNetUtil", "progress = " + progress);
+                        long finalSum = sum;
                         // 下载中
-                        if (total == -1) { //有时候返回-1...
-                            listener.onProcess("目前已下载：" + SizeFormat.format(sum));
+                        if (total == -1) { //有时候返回-1...这种情况触发下载量展示而非进度
+                            HandlerUtil.runOnUiThread(() -> listener.onProcess("目前已下载：" + SizeFormat.format(finalSum)));
                         } else {
-                            listener.onProgress(progress);
+                            HandlerUtil.runOnUiThread(() -> listener.onProgress(progress));
                         }
-                        long nowTime = System.currentTimeMillis();
-                        // 3s计算一次下载速度
-                        if (nowTime - startTime > 3000) {
-                            long secondSpeed = (sum - disSum) / 3;
-                            listener.onSpeedProgress(SizeFormat.format(secondSpeed));
-                            disSum = sum;
-                            startTime = nowTime;
+                        if (speedMonitor != null) {
+                            speedMonitor.calculation(sum);
                         }
                     }
                     fos.flush();
                     // 下载完成
-                    listener.onSuccess();
+                    HandlerUtil.runOnUiThread(listener::onSuccess);
                 } catch (Exception e) {
-                    listener.onFail(e);
+                    HandlerUtil.runOnUiThread(() -> listener.onFail(e));
                 } finally {
                     try {
                         if (is != null)
                             is.close();
-                    } catch (IOException e) {
+                    } catch (IOException ignored) {
                     }
                     try {
                         if (fos != null)
                             fos.close();
-                    } catch (IOException e) {
+                    } catch (IOException ignored) {
                     }
                 }
             }
@@ -172,8 +169,28 @@ public class ClientNetUtil {
         void onFail(Exception e);
 
         void onSuccess();
+    }
 
-        void onSpeedProgress(String speed);
+    public abstract static class SpeedMonitor {
+
+        long startTime = 0;
+        long disSum = 0;
+
+        // 返回计算的时间间隔
+        public abstract long timeInterval();
+
+        public abstract void onSpeedChanged(String speed);
+
+        public void calculation(long nowSum) {
+            long nowTime = System.currentTimeMillis();
+            // ns计算一次下载速度
+            if (nowTime - startTime > timeInterval()) {
+                long secondSpeed = (nowSum - disSum) / 3;
+                HandlerUtil.runOnUiThread(() -> onSpeedChanged(SizeFormat.format(secondSpeed) + "/s"));
+                disSum = nowSum;
+                startTime = nowTime;
+            }
+        }
     }
 
     /**

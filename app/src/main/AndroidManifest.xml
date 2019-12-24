@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dixon.phoneshare">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".PhoneShareApplication"
         android:allowBackup="true"
@@ -14,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".download.linkdown.LinkDownloadActivity"></activity>
+        <activity android:name=".download.pathdown.PathDownloadActivity"></activity>
+        <activity android:name=".download.linkdown.LinkDownloadActivity" />
         <activity android:name=".upload.filefun.FileUploadActivity" />
         <activity android:name=".upload.imgfun.activity.ImageViewerActivity" />
         <activity android:name=".upload.videofun.activity.VideoUploadActivity" />
@@ -36,10 +41,5 @@
                 android:resource="@xml/provider_paths" />
         </provider>
     </application>
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

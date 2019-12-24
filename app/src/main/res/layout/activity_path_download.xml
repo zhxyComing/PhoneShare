@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".download.pathdown.PathDownloadActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorBackgroundGray">
+
+        <EditText
+            android:id="@+id/apd_et_path_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edit_read"
+            android:letterSpacing="0.05"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:text="D:/测试路径"
+            android:textColor="@color/colorTextContentBlack"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <ProgressBar
+                android:id="@+id/apd_pb_loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminateBehavior="repeat"
+                android:indeterminateDrawable="@drawable/anim_loading" />
+
+            <ImageView
+                android:id="@+id/apd_iv_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_search" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/apd_gv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="4"
+        android:overScrollMode="never" />
+
+</LinearLayout>

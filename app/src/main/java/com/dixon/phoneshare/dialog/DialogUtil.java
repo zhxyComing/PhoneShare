@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dixon.phoneshare.R;
@@ -44,5 +45,21 @@ public class DialogUtil {
             }
         }
         return false;
+    }
+
+    public static CustomDialog showProgressDialog(Context context) {
+        if (!canShow(context)) {
+            return null;
+        }
+        CustomDialog dialog = new CustomDialog.Builder(context)
+                .view(R.layout.dialog_progress)
+                .style(R.style.dialog)
+                .isCancelOnTouchOutSide(false)
+                .windowAnimStyle(R.style.dialogAnim)
+                .widthPx(ScreenUtil.dpToPxInt(context, 280))
+//                .heightPx(ScreenUtils.dpToPxInt(context, 196))
+                .build();
+        show(dialog);
+        return dialog;
     }
 }
