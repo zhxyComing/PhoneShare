@@ -22,55 +22,23 @@ public class ApiServiceNet {
         sClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                listener.onFail(e.toString());
+                HandlerUtil.runOnUiThread(() -> listener.onFail(e.toString()));
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     if (response.body() == null) {
-                        listener.onSuccess("");
+                        HandlerUtil.runOnUiThread(() -> listener.onSuccess(""));
                     } else {
-                        listener.onSuccess(response.body().string());
+                        String res = response.body().string();
+                        HandlerUtil.runOnUiThread(() -> listener.onSuccess(res));
                     }
                 } else {
-                    listener.onFail("错误：" + response.code());
+                    HandlerUtil.runOnUiThread(() -> listener.onFail("错误：" + response.code()));
                 }
             }
         });
-    }
-
-    private static final String test = "{\n" +
-            "\t\"list\": [{\n" +
-            "\t\t\t\"name\": \"Google\",\n" +
-            "\t\t\t\"path\": \"D://google\",\n" +
-            "\t\t\t\"size\": 10000,\n" +
-            "\t\t\t\"directory\": true\n" +
-            "\t\t},\n" +
-            "\t\t{\n" +
-            "\t\t\t\"name\": \"Google\",\n" +
-            "\t\t\t\"path\": \"D://google\",\n" +
-            "\t\t\t\"size\": 10000,\n" +
-            "\t\t\t\"directory\": true\n" +
-            "\t\t},\n" +
-            "\t\t{\n" +
-            "\t\t\t\"name\": \"Google\",\n" +
-            "\t\t\t\"path\": \"D://google\",\n" +
-            "\t\t\t\"size\": 10000,\n" +
-            "\t\t\t\"directory\": false\n" +
-            "\t\t}\n" +
-            "\t]\n" +
-            "}";
-
-    public static void getPcFileListTest(String path, OnResultListener listener) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            HandlerUtil.runOnUiThread(() -> listener.onSuccess(test));
-        }).start();
     }
 
     public interface OnResultListener {

@@ -96,7 +96,8 @@ public class ClientNetUtil {
      * @param listener     进度监听 不能为空
      * @param speedMonitor 下载速度监听 可为空
      */
-    public static void download(final String url,
+    public static void download(final String name,
+                                final String url,
                                 final String saveDir,
                                 @NonNull final OnProgressChangedListener listener,
                                 @Nullable final SpeedMonitor speedMonitor) {
@@ -119,7 +120,7 @@ public class ClientNetUtil {
                 try {
                     is = response.body().byteStream(); //获取byte流
                     long total = response.body().contentLength();
-                    File file = new File(savePath, getNameFromUrl(url));
+                    File file = new File(savePath, name);
                     fos = new FileOutputStream(file);
                     long sum = 0;
                     while ((len = is.read(buf)) != -1) {
@@ -213,7 +214,7 @@ public class ClientNetUtil {
      * @return 从下载连接中解析出文件名
      */
     @NonNull
-    private static String getNameFromUrl(String url) {
+    public static String getNameFromUrl(String url) {
         return url.substring(url.lastIndexOf("/") + 1);
     }
 }

@@ -30,7 +30,7 @@ public class LinkDownloadActivity extends BaseActivity {
     }
 
     private void initView() {
-        etDownloadUrl.setText(String.format("%s%s?path=", ApiService.API_HOST, ApiService.API_DOWNLOAD));
+        etDownloadUrl.setText(String.format("%s%s?path=D:/", ApiService.API_HOST, ApiService.API_DOWNLOAD));
         pbProgress.setProgress(0);
         tvProcess.setText("0%");
     }
@@ -45,7 +45,7 @@ public class LinkDownloadActivity extends BaseActivity {
         if (!TextUtils.isEmpty(downloadUrl)) {
             onDownloadStart();
             try {
-                ClientNetUtil.download(downloadUrl, saveUrl, new ClientNetUtil.OnProgressChangedListener() {
+                ClientNetUtil.download(ClientNetUtil.getNameFromUrl(downloadUrl), downloadUrl, saveUrl, new ClientNetUtil.OnProgressChangedListener() {
                     @Override
                     public void onProgress(int progress) {
                         pbProgress.setProgress(progress);

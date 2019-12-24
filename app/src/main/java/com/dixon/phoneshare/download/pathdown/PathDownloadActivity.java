@@ -2,6 +2,7 @@ package com.dixon.phoneshare.download.pathdown;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,39 +76,44 @@ public class PathDownloadActivity extends Activity {
             TextView processView = dialog.getView().findViewById(R.id.tvProcess);
             ProgressBar progressBar = dialog.getView().findViewById(R.id.tvProgress);
             try {
-                ClientNetUtil.download(ApiService.API_HOST + ApiService.API_DOWNLOAD + "?path=" + file.getPath(), "PhoneShare/", new ClientNetUtil.OnProgressChangedListener() {
-                    @Override
-                    public void onProgress(int progress) {
-                        progressBar.setProgress(progress);
-                    }
+                String downloadUrl = ApiService.API_HOST + ApiService.API_DOWNLOAD + "?path=" + URLEncoder.encode(file.getPath());
+                Log.e("DownloadUrl", downloadUrl);
+                ClientNetUtil.download(
+                        ClientNetUtil.getNameFromUrl(file.getPath()),
+                        downloadUrl,
+                        "PhoneShare/", new ClientNetUtil.OnProgressChangedListener() {
+                            @Override
+                            public void onProgress(int progress) {
+                                progressBar.setProgress(progress);
+                            }
 
-                    @Override
-                    public void onProcess(String message) {
-                        processView.setText(message);
-                    }
+                            @Override
+                            public void onProcess(String message) {
+                                processView.setText(message);
+                            }
 
-                    @Override
-                    public void onFail(Exception e) {
-                        processView.setText(e.toString());
-                        dialog.setCanceledOnTouchOutside(true);
-                    }
+                            @Override
+                            public void onFail(Exception e) {
+                                processView.setText(e.toString());
+                                dialog.setCanceledOnTouchOutside(true);
+                            }
 
-                    @Override
-                    public void onSuccess() {
-                        processView.setText("下载完成");
-                        dialog.setCanceledOnTouchOutside(true);
-                    }
-                }, new ClientNetUtil.SpeedMonitor() {
-                    @Override
-                    public long timeInterval() {
-                        return 2;
-                    }
+                            @Override
+                            public void onSuccess() {
+                                processView.setText("下载完成");
+                                dialog.setCanceledOnTouchOutside(true);
+                            }
+                        }, new ClientNetUtil.SpeedMonitor() {
+                            @Override
+                            public long timeInterval() {
+                                return 2000;
+                            }
 
-                    @Override
-                    public void onSpeedChanged(String speed) {
-                        speedView.setText(speed);
-                    }
-                });
+                            @Override
+                            public void onSpeedChanged(String speed) {
+                                speedView.setText(speed);
+                            }
+                        });
             } catch (Exception e) {
                 dialog.dismiss();
                 Toast.show(this, "错误：" + e.toString());
@@ -122,7 +129,7 @@ public class PathDownloadActivity extends Activity {
     private void jumpToPathFirstIn(PcFile file) {
         setLoadingShowStatus();
         mPathShowView.setText(file.getPath());
-        ApiServiceNet.getPcFileListTest(file.getPath(), new ApiServiceNet.OnResultListener() {
+        ApiServiceNet.getPcFileList(file.getPath(), new ApiServiceNet.OnResultListener() {
             @Override
             public void onSuccess(String resultJson) {
                 List<PcFile> list = parseJson(resultJson);
@@ -142,7 +149,7 @@ public class PathDownloadActivity extends Activity {
             Toast.show(this, "正在加载，请稍后...");
         }
         setLoadingShowStatus();
-        ApiServiceNet.getPcFileListTest(file.getPath(), new ApiServiceNet.OnResultListener() {
+        ApiServiceNet.getPcFileList(file.getPath(), new ApiServiceNet.OnResultListener() {
             @Override
             public void onSuccess(String resultJson) {
                 List<PcFile> list = parseJson(resultJson);
@@ -160,12 +167,13 @@ public class PathDownloadActivity extends Activity {
 
     private void onPathJumpSuccessViewChange(PcFile file) {
         mPathShowView.setText(file.getPath());
-        recordHistoryPath(mCurrentPcFile);
+        recordHistoryPath(file);
+        Log.e("History", mHistoryPath.toString());
     }
 
     private void backToPath(PcFile file) {
         setLoadingShowStatus();
-        ApiServiceNet.getPcFileListTest(file.getPath(), new ApiServiceNet.OnResultListener() {
+        ApiServiceNet.getPcFileList(file.getPath(), new ApiServiceNet.OnResultListener() {
             @Override
             public void onSuccess(String resultJson) {
                 List<PcFile> list = parseJson(resultJson);
@@ -183,6 +191,7 @@ public class PathDownloadActivity extends Activity {
 
     private void onPathBackSuccessViewChange(PcFile file) {
         mPathShowView.setText(file.getPath());
+        mCurrentPcFile = file;
     }
 
     private List<PcFile> parseJson(String resultJson) {
@@ -199,6 +208,11 @@ public class PathDownloadActivity extends Activity {
             //通过反射 得到UserBean.class
             PcFile pcFile = gson.fromJson(user, new TypeToken<PcFile>() {
             }.getType());
+            String originPath = pcFile.getPath();
+            Log.e("parseJson", "originPath " + originPath);
+            String parsePath = originPath.replaceAll("\\\\", "/");
+            Log.e("parseJson", "parsePath " + parsePath);
+            pcFile.setPath(parsePath);
             pcFileList.add(pcFile);
         }
         return pcFileList;
@@ -235,7 +249,7 @@ public class PathDownloadActivity extends Activity {
 
     private void recordHistoryPath(PcFile file) {
         if (file.isDirectory()) {
-            mHistoryPath.add(file);
+            mHistoryPath.add(mCurrentPcFile);
             // 只有当前文件是文件夹 可打来 才能添加历史并重置当前节点
             mCurrentPcFile = file;
         }
@@ -251,6 +265,7 @@ public class PathDownloadActivity extends Activity {
                 return;
             }
             backToPath(mHistoryPath.remove(mHistoryPath.size() - 1));
+            Log.e("History", mHistoryPath.toString());
         }
     }
 

@@ -13,31 +13,26 @@
         android:textColor="#303233"
         android:textSize="19sp" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tvSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="0 k/s"
+        android:textColor="@color/colorTextContentBlue"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/tvSpeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="0 k/s"
-            android:textColor="@color/colorTextContentBlue"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tvProcess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="24dp"
-            android:singleLine="true"
-            android:text="已下载 20 M"
-            android:textColor="@color/colorTextContentBlack"
-            android:textSize="14sp" />
-
-    </FrameLayout>
+    <TextView
+        android:id="@+id/tvProcess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:text="已下载 20 M"
+        android:textColor="@color/colorTextContentBlack"
+        android:textSize="14sp" />
 
     <ProgressBar
         android:id="@+id/tvProgress"
@@ -45,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="24dp"
         android:max="100"
