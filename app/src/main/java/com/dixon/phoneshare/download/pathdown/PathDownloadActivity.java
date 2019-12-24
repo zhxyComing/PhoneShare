@@ -138,6 +138,9 @@ public class PathDownloadActivity extends Activity {
     }
 
     private void jumpToPath(PcFile file) {
+        if (isLoading) {
+            Toast.show(this, "正在加载，请稍后...");
+        }
         setLoadingShowStatus();
         ApiServiceNet.getPcFileListTest(file.getPath(), new ApiServiceNet.OnResultListener() {
             @Override
