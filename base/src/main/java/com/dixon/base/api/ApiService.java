@@ -9,5 +9,5 @@ public class ApiService {
 
     private ApiService() {
     }
-    
+
 }
