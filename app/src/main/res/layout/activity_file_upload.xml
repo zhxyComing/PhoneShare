@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".filefun.FileUploadActivity">
+    tools:context=".upload.filefun.FileUploadActivity">
 
     <!--原生的item点击效果存在延迟 用自己的-->
     <ListView

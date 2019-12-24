@@ -1,4 +1,4 @@
-package com.dixon.phoneshare.filefun;
+package com.dixon.phoneshare.upload.filefun;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.dixon.base.BaseActivity;
 import com.dixon.phoneshare.R;
-import com.dixon.phoneshare.imgfun.activity.ImageViewerActivity;
+import com.dixon.phoneshare.upload.imgfun.activity.ImageViewerActivity;
 import com.dixon.tools.Toast;
 import com.dixon.tools.file.FileUtil;
 

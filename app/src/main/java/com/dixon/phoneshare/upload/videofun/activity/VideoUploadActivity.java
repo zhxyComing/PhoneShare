@@ -1,4 +1,4 @@
-package com.dixon.phoneshare.videofun.activity;
+package com.dixon.phoneshare.upload.videofun.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.dixon.base.BaseActivity;
 import com.dixon.phoneshare.R;
 import com.dixon.phoneshare.bean.SelectItem;
-import com.dixon.phoneshare.videofun.adapter.VideoListAdapter;
+import com.dixon.phoneshare.upload.videofun.adapter.VideoListAdapter;
 import com.dixon.tools.SizeFormat;
 import com.dixon.tools.file.FileUtil;
 import com.dixon.tools.file.VideoItem;

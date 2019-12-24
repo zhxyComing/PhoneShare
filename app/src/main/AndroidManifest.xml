@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.dixon.phoneshare">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,12 +15,13 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".DownloadTempActivity"></activity>
-        <activity android:name=".filefun.FileUploadActivity" />
-        <activity android:name=".imgfun.activity.ImageViewerActivity" />
-        <activity android:name=".videofun.activity.VideoUploadActivity" />
-        <activity android:name=".imgfun.activity.ImageUploadActivity" />
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".download.linkdown.LinkDownloadActivity"></activity>
+        <activity android:name=".upload.filefun.FileUploadActivity" />
+        <activity android:name=".upload.imgfun.activity.ImageViewerActivity" />
+        <activity android:name=".upload.videofun.activity.VideoUploadActivity" />
+        <activity android:name=".upload.imgfun.activity.ImageUploadActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

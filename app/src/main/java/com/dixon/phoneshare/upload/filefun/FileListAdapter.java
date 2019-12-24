@@ -1,4 +1,4 @@
-package com.dixon.phoneshare.filefun;
+package com.dixon.phoneshare.upload.filefun;
 
 import android.content.Context;
 import android.net.Uri;

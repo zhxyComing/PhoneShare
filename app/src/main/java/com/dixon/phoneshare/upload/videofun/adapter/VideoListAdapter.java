@@ -1,4 +1,4 @@
-package com.dixon.phoneshare.imgfun.adapter;
+package com.dixon.phoneshare.upload.videofun.adapter;
 
 import android.content.Context;
 import android.net.Uri;
@@ -14,22 +14,22 @@ import com.dixon.phoneshare.R;
 import com.dixon.phoneshare.bean.SelectItem;
 import com.dixon.phoneshare.common.IItemData;
 import com.dixon.tools.TimeFormat;
-import com.dixon.tools.file.ImageItem;
+import com.dixon.tools.file.VideoItem;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageListAdapter extends BaseAdapter implements IItemData<SelectItem<ImageItem>> {
+public class VideoListAdapter extends BaseAdapter implements IItemData<SelectItem<VideoItem>> {
 
-    private List<SelectItem<ImageItem>> mItems;
+    private List<SelectItem<VideoItem>> mItems;
     private Context mContext;
 
-    public ImageListAdapter(Context context,
-                            List<ImageItem> items) {
+    public VideoListAdapter(Context context,
+                            List<VideoItem> items) {
         this.mContext = context;
         mItems = new ArrayList<>();
-        for (ImageItem item : items) {
+        for (VideoItem item : items) {
             mItems.add(new SelectItem<>(item));
         }
     }
@@ -53,17 +53,18 @@ public class ImageListAdapter extends BaseAdapter implements IItemData<SelectIte
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
+            // 暂时用image的Layout
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_image_list, null);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        ImageItem imageItem = mItems.get(position).getBean();
-        vh.tvTimeView.setText(TimeFormat.longToString(Long.valueOf(imageItem.getDate())));
-        vh.tvSizeView.setText(imageItem.getFileSize());
+        VideoItem fileItem = mItems.get(position).getBean();
+        vh.tvTimeView.setText(TimeFormat.longToString(Long.valueOf(fileItem.getDate())));
+        vh.tvSizeView.setText(fileItem.getFileSize());
         Glide.with(mContext)
-                .load(Uri.fromFile(new File(imageItem.getFilePath())))
+                .load(Uri.fromFile(new File(fileItem.getFilePath())))
                 .into(vh.ivImgView);
         if (mItems.get(position).isHasSelect()) {
             vh.ivSelectTag.setVisibility(View.VISIBLE);
@@ -74,7 +75,7 @@ public class ImageListAdapter extends BaseAdapter implements IItemData<SelectIte
     }
 
     @Override
-    public List<SelectItem<ImageItem>> getItems() {
+    public List<SelectItem<VideoItem>> getItems() {
         return mItems;
     }
 

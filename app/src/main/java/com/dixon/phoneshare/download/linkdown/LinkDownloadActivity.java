@@ -1,4 +1,4 @@
-package com.dixon.phoneshare;
+package com.dixon.phoneshare.download.linkdown;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,8 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dixon.base.transmission.ClientNetUtil;
+import com.dixon.phoneshare.R;
 
-public class DownloadTempActivity extends AppCompatActivity {
+public class LinkDownloadActivity extends AppCompatActivity {
 
     private EditText etDownloadUrl, etSaveUrl;
     private TextView tvDownloadBtn, tvProgress;

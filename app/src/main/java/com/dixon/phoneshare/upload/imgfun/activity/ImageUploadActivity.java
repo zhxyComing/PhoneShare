@@ -1,4 +1,4 @@
-package com.dixon.phoneshare.imgfun.activity;
+package com.dixon.phoneshare.upload.imgfun.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.dixon.base.BaseActivity;
 import com.dixon.phoneshare.R;
 import com.dixon.phoneshare.bean.SelectItem;
-import com.dixon.phoneshare.imgfun.adapter.ImageListAdapter;
+import com.dixon.phoneshare.upload.imgfun.adapter.ImageListAdapter;
 import com.dixon.tools.SizeFormat;
 import com.dixon.tools.file.ImageItem;
 import com.dixon.tools.file.FileUtil;

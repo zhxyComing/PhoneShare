@@ -4,6 +4,8 @@ import android.os.Environment;
 
 import androidx.annotation.NonNull;
 
+import com.dixon.base.HandlerUtil;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -96,7 +98,9 @@ public class ClientNetUtil {
             @Override
             public void onFailure(Call call, IOException e) {
                 // 下载失败
-                listener.onFail(e);
+                HandlerUtil.runOnUiThread(() ->{
+                    listener.onFail(e);
+                });
             }
 
             @Override

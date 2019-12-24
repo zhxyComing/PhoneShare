@@ -1,4 +1,4 @@
-package com.dixon.phoneshare.imgfun.activity;
+package com.dixon.phoneshare.upload.imgfun.activity;
 
 import android.app.Activity;
 import android.net.Uri;

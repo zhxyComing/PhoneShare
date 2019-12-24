@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".imgfun.activity.ImageUploadActivity">
+    tools:context=".upload.imgfun.activity.ImageUploadActivity">
 
     <GridView
         android:id="@+id/aiu_gl_img_list"

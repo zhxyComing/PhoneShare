@@ -12,9 +12,10 @@ import androidx.annotation.NonNull;
 
 import com.dixon.base.BaseActivity;
 import com.dixon.phoneshare.dialog.DialogUtil;
-import com.dixon.phoneshare.filefun.FileUploadActivity;
-import com.dixon.phoneshare.imgfun.activity.ImageUploadActivity;
-import com.dixon.phoneshare.videofun.activity.VideoUploadActivity;
+import com.dixon.phoneshare.download.linkdown.LinkDownloadActivity;
+import com.dixon.phoneshare.upload.filefun.FileUploadActivity;
+import com.dixon.phoneshare.upload.imgfun.activity.ImageUploadActivity;
+import com.dixon.phoneshare.upload.videofun.activity.VideoUploadActivity;
 import com.dixon.tools.Toast;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
@@ -93,7 +94,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(HomeActivity.this, FileUploadActivity.class));
                 break;
             case R.id.am_ll_download_tab:
-                startActivity(new Intent(HomeActivity.this, DownloadTempActivity.class));
+                startActivity(new Intent(HomeActivity.this, LinkDownloadActivity.class));
                 break;
         }
     }
