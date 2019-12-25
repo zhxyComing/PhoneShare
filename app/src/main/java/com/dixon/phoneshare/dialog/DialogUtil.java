@@ -47,12 +47,44 @@ public class DialogUtil {
         return false;
     }
 
+    /**
+     * 进度
+     * <p>
+     * 包括下载百分比、速度、下载量 多用于单个大型文件下载或上传
+     *
+     * @param context
+     * @return
+     */
     public static CustomDialog showProgressDialog(Context context) {
         if (!canShow(context)) {
             return null;
         }
         CustomDialog dialog = new CustomDialog.Builder(context)
                 .view(R.layout.dialog_progress)
+                .style(R.style.dialog)
+                .isCancelOnTouchOutSide(false)
+                .windowAnimStyle(R.style.dialogAnim)
+                .widthPx(ScreenUtil.dpToPxInt(context, 280))
+//                .heightPx(ScreenUtils.dpToPxInt(context, 196))
+                .build();
+        show(dialog);
+        return dialog;
+    }
+
+    /**
+     * 进度
+     * <p>
+     * 包括下个 n/n 个 多用于多个小型文件下载或上传
+     *
+     * @param context
+     * @return
+     */
+    public static CustomDialog showProcessDialog(Context context) {
+        if (!canShow(context)) {
+            return null;
+        }
+        CustomDialog dialog = new CustomDialog.Builder(context)
+                .view(R.layout.dialog_process)
                 .style(R.style.dialog)
                 .isCancelOnTouchOutSide(false)
                 .windowAnimStyle(R.style.dialogAnim)

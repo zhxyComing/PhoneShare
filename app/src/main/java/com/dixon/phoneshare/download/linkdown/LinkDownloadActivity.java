@@ -66,6 +66,7 @@ public class LinkDownloadActivity extends BaseActivity {
                     @Override
                     public void onSuccess() {
                         tvProcess.setText("下载完成");
+                        pbProgress.setProgress(100);
                         onDownloadFinish();
                     }
                 }, new ClientNetUtil.SpeedMonitor() {

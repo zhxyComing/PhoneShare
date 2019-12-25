@@ -6,11 +6,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dixon.base.BaseActivity;
+import com.dixon.base.api.ApiService;
+import com.dixon.base.transmission.ClientNetUtil;
 import com.dixon.phoneshare.R;
+import com.dixon.phoneshare.dialog.DialogUtil;
 import com.dixon.phoneshare.upload.imgfun.activity.ImageViewerActivity;
+import com.dixon.tools.CustomDialog;
 import com.dixon.tools.Toast;
 import com.dixon.tools.file.FileUtil;
 
@@ -26,6 +31,8 @@ public class FileUploadActivity extends BaseActivity {
     private FileListAdapter mAdapter;
     private List<String> mHistoryPath = new ArrayList<>();
     private String mCurrentPath;
+
+    private boolean isUploadRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +121,73 @@ public class FileUploadActivity extends BaseActivity {
     }
 
     private void uploadFile() {
+        if (isUploadRun) {
+            Toast.show(this, "当前已有任务在运行，请稍后...");
+            return;
+        }
+        if (mAdapter.getSelectFile() == null) {
+            Toast.show(this, "请选择文件后再上传。");
+            return;
+        }
+        CustomDialog dialog = DialogUtil.showProgressDialog(this);
+        if (dialog == null) {
+            return;
+        }
+        onUploadStart();
+        ProgressBar progressBar = dialog.getView().findViewById(R.id.tvProgress);
+        TextView processView = dialog.getView().findViewById(R.id.tvProcess);
+        TextView speedView = dialog.getView().findViewById(R.id.tvSpeed);
+        speedView.setText("暂不支持");
+        processView.setText("开始上传");
 
+        File selectFile = mAdapter.getSelectFile();
+        String uploadLink = ApiService.API_HOST + ApiService.API_UPLOAD;
+        try {
+            ClientNetUtil.upload(uploadLink, selectFile, new ClientNetUtil.OnProgressChangedListener() {
+                @Override
+                public void onProgress(int progress) {
+                    progressBar.setProgress(progress);
+                }
+
+                @Override
+                public void onProcess(String message) {
+                    // 上传实际未响应
+                    processView.setText(message);
+                }
+
+                @Override
+                public void onFail(Exception e) {
+                    onUploadFail();
+                    processView.setText(String.format("上传失败：%s", e.toString()));
+                    dialog.setCanceledOnTouchOutside(true);
+                }
+
+                @Override
+                public void onSuccess() {
+                    onUploadSuccess();
+                    processView.setText("上传完成");
+                    dialog.setCanceledOnTouchOutside(true);
+                }
+            });
+        } catch (Exception e) {
+            onUploadFail();
+            Toast.show(this, "错误：" + e.toString());
+            dialog.dismiss();
+        }
+    }
+
+    private void onUploadStart() {
+        isUploadRun = true;
+    }
+
+    private void onUploadSuccess() {
+        isUploadRun = false;
+        // 上传成功 移除选中文件并刷新视图
+        mAdapter.notifySelectFile(null);
+    }
+
+    private void onUploadFail() {
+        isUploadRun = false;
     }
 
     private void recordHistoryPath(File file) {
