@@ -10,21 +10,34 @@
     <application
         android:name=".PhoneShareApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".download.pathdown.PathDownloadActivity"></activity>
-        <activity android:name=".download.linkdown.LinkDownloadActivity" />
-        <activity android:name=".upload.filefun.FileUploadActivity" />
+        <activity
+            android:name=".download.pathdown.PathDownloadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".download.linkdown.LinkDownloadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".upload.filefun.FileUploadActivity"
+            android:screenOrientation="portrait" />
+        <!--ImageView 允许横屏-->
         <activity android:name=".upload.imgfun.activity.ImageViewerActivity" />
-        <activity android:name=".upload.videofun.activity.VideoUploadActivity" />
-        <activity android:name=".upload.imgfun.activity.ImageUploadActivity" />
-        <activity android:name=".HomeActivity">
+        <activity
+            android:name=".upload.videofun.activity.VideoUploadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".upload.imgfun.activity.ImageUploadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

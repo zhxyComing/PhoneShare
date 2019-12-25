@@ -2,6 +2,7 @@ package com.dixon.phoneshare.upload.videofun.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -15,13 +16,11 @@ import com.dixon.phoneshare.R;
 import com.dixon.phoneshare.bean.SelectItem;
 import com.dixon.phoneshare.core.SumMonitor;
 import com.dixon.phoneshare.dialog.DialogUtil;
-import com.dixon.phoneshare.upload.imgfun.activity.ImageUploadActivity;
 import com.dixon.phoneshare.upload.videofun.adapter.VideoListAdapter;
 import com.dixon.tools.CustomDialog;
 import com.dixon.tools.SizeFormat;
 import com.dixon.tools.Toast;
 import com.dixon.tools.file.FileUtil;
-import com.dixon.tools.file.ImageItem;
 import com.dixon.tools.file.VideoItem;
 
 import java.io.File;
@@ -104,7 +103,7 @@ public class VideoUploadActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.aiu_tv_file_upload:
+            case R.id.avu_tv_file_upload:
                 uploadImageList();
                 break;
         }
@@ -114,10 +113,9 @@ public class VideoUploadActivity extends BaseActivity implements View.OnClickLis
     @SuppressLint("DefaultLocale")
     private void uploadImageList() {
         if (mSelectItems.isEmpty()) {
-            Toast.show(this, "请先勾选要上传的视频。");
+            Toast.show(this, "请先勾选要上传的视频");
             return;
         }
-
         CustomDialog dialog = DialogUtil.showProcessDialog(this);
         if (dialog == null) {
             return;

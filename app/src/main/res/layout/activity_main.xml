@@ -26,39 +26,33 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="120dp"
-                    android:background="@color/colorSymbolGreen"
-                    android:gravity="center"
-                    android:text="图"
-                    android:textColor="@android:color/white"
-                    android:textSize="38sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@mipmap/ic_img_upload" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:text="图片上传"
+                        android:text="手机图片上传"
                         android:textColor="@color/colorTextTitleBlack"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@color/colorSymbolGreen" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -74,39 +68,33 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="120dp"
-                    android:background="@color/colorSymbolGreen"
-                    android:gravity="center"
-                    android:text="视"
-                    android:textColor="@android:color/white"
-                    android:textSize="38sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@mipmap/ic_video_upload" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:text="视频上传"
+                        android:text="手机视频上传"
                         android:textColor="@color/colorTextTitleBlack"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@color/colorSymbolGreen" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -122,39 +110,33 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="120dp"
-                    android:background="@color/colorSymbolGreen"
-                    android:gravity="center"
-                    android:text="文"
-                    android:textColor="@android:color/white"
-                    android:textSize="38sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@mipmap/ic_file_upload" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:text="文件上传"
+                        android:text="手机文件上传"
                         android:textColor="@color/colorTextTitleBlack"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@color/colorSymbolGreen" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -170,39 +152,33 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="120dp"
-                    android:background="@color/colorSymbolBlue"
-                    android:gravity="center"
-                    android:text="链"
-                    android:textColor="@android:color/white"
-                    android:textSize="38sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginBottom="22dp"
+                    android:src="@mipmap/ic_path_download" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:text="链接下载"
+                        android:text="电脑路径下载"
                         android:textColor="@color/colorTextTitleBlack"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@color/colorSymbolBlue" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -218,39 +194,33 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="120dp"
-                    android:background="@color/colorSymbolBlue"
-                    android:gravity="center"
-                    android:text="浏"
-                    android:textColor="@android:color/white"
-                    android:textSize="38sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@mipmap/ic_browser_download" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:text="浏览下载"
+                        android:text="电脑文件浏览下载"
                         android:textColor="@color/colorTextTitleBlack"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@color/colorSymbolBlue" />
                 </LinearLayout>
 
             </LinearLayout>

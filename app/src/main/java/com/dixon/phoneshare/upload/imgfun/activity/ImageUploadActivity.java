@@ -110,7 +110,7 @@ public class ImageUploadActivity extends BaseActivity implements View.OnClickLis
     @SuppressLint("DefaultLocale")
     private void uploadImageList() {
         if (mSelectItems.isEmpty()) {
-            Toast.show(this, "请先勾选要上传的图片。");
+            Toast.show(this, "请先勾选要上传的图片");
             return;
         }
 

@@ -21,7 +21,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:singleLine="true"
-        android:text="已下载 2/10 个"
         android:textColor="@color/colorTextContentBlack"
         android:textSize="14sp" />
 

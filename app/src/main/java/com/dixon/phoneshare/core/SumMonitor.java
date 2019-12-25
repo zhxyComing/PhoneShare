@@ -1,5 +1,8 @@
 package com.dixon.phoneshare.core;
 
+/**
+ * 用于记录多文件上传下载n成功n失败
+ */
 public class SumMonitor {
     private int sum;
     private int success;

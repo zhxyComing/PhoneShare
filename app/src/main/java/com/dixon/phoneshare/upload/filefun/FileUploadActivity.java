@@ -3,8 +3,7 @@ package com.dixon.phoneshare.upload.filefun;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.AdapterView;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,6 +12,7 @@ import com.dixon.base.BaseActivity;
 import com.dixon.base.api.ApiService;
 import com.dixon.base.transmission.ClientNetUtil;
 import com.dixon.phoneshare.R;
+import com.dixon.phoneshare.core.PositionMonitor;
 import com.dixon.phoneshare.dialog.DialogUtil;
 import com.dixon.phoneshare.upload.imgfun.activity.ImageViewerActivity;
 import com.dixon.tools.CustomDialog;
@@ -29,8 +29,9 @@ public class FileUploadActivity extends BaseActivity {
     private TextView mUpload, mTip;
 
     private FileListAdapter mAdapter;
-    private List<String> mHistoryPath = new ArrayList<>();
+    private List<PositionMonitor<String>> mHistoryPath = new ArrayList<>();
     private String mCurrentPath;
+    private int mCurrentPosition;
 
     private boolean isUploadRun = false;
 
@@ -44,38 +45,39 @@ public class FileUploadActivity extends BaseActivity {
         mAdapter = new FileListAdapter(this, FileUtil.getFileList(mCurrentPath));
         mFileListView.setAdapter(mAdapter);
 
-        mFileListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                File selectFile = mAdapter.getItems().get(position);
-                // 刷新选中状态
-                if (mAdapter.getSelectFile() != null && mAdapter.getSelectFile().equals(selectFile)) {
-                    mAdapter.notifySelectFile(null);
-                } else {
-                    mAdapter.notifySelectFile(selectFile);
-                }
-                notifyTip();
-                return true;
+        mFileListView.setOnItemLongClickListener((parent, view, position, id) -> {
+            File selectFile = mAdapter.getItems().get(position);
+            // 刷新选中状态
+            if (mAdapter.getSelectFile() != null && mAdapter.getSelectFile().equals(selectFile)) {
+                mAdapter.notifySelectFile(null);
+            } else {
+                mAdapter.notifySelectFile(selectFile);
             }
+            notifyTip();
+            return true;
         });
 
-        mFileListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                File file = mAdapter.getItems().get(position);
-                //将当钱路径记入历史方便回退
-                recordHistoryPath(file);
-                //跳页
-                jumpPage(file);
-                //根结点 进入点击跳转选项
-                jumpIntent(file);
-            }
+        mFileListView.setOnItemClickListener((parent, view, position, id) -> {
+            File file = mAdapter.getItems().get(position);
+            //将当钱路径记入历史方便回退
+            recordHistoryPath(file);
+            //跳页
+            jumpPage(file);
+            //根结点 进入点击跳转选项
+            jumpIntent(file);
         });
 
-        mUpload.setOnClickListener(new View.OnClickListener() {
+        mUpload.setOnClickListener(v -> uploadFile());
+
+        mFileListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onClick(View v) {
-                uploadFile();
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                mCurrentPosition = firstVisibleItem;
             }
         });
     }
@@ -192,7 +194,7 @@ public class FileUploadActivity extends BaseActivity {
 
     private void recordHistoryPath(File file) {
         if (file.isDirectory() && file.listFiles() != null) {
-            mHistoryPath.add(mCurrentPath);
+            mHistoryPath.add(new PositionMonitor<>(mCurrentPath, mCurrentPosition));
         }
     }
 
@@ -219,7 +221,8 @@ public class FileUploadActivity extends BaseActivity {
         if (mHistoryPath.isEmpty()) {
             super.onBackPressed();
         } else {
-            jumpPage(new File(mHistoryPath.remove(mHistoryPath.size() - 1)));
+            PositionMonitor<String> backData = mHistoryPath.remove(mHistoryPath.size() - 1);
+            backPage(new File(backData.getData()), backData.getPosition());
         }
     }
 
@@ -227,10 +230,25 @@ public class FileUploadActivity extends BaseActivity {
         if (file.isDirectory() && file.listFiles() != null) {
             //更新最新当前路径
             mCurrentPath = file.getPath();
+            mCurrentPosition = 0;
             //进入下一级
             mAdapter.getItems().clear();
             mAdapter.getItems().addAll(FileUtil.getFileList(file.getPath()));
             mAdapter.notifyDataSetChanged();
+            mFileListView.setSelection(mCurrentPosition);
+        }
+    }
+
+    private void backPage(File file, int position) {
+        if (file.isDirectory() && file.listFiles() != null) {
+            //更新最新当前路径
+            mCurrentPath = file.getPath();
+            mCurrentPosition = position;
+            //进入下一级
+            mAdapter.getItems().clear();
+            mAdapter.getItems().addAll(FileUtil.getFileList(file.getPath()));
+            mAdapter.notifyDataSetChanged();
+            mFileListView.setSelection(mCurrentPosition);
         }
     }
 }
