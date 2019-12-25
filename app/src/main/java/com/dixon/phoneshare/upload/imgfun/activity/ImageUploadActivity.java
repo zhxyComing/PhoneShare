@@ -24,7 +24,6 @@ import com.dixon.tools.file.ImageItem;
 import com.dixon.tools.file.FileUtil;
 
 import java.io.File;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,9 +150,10 @@ public class ImageUploadActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onSuccess() {
-                        monitor.addSuccess();
                         // 上传成功 从勾选状态移除
                         mSelectItems.remove(item);
+                        resetSelect(item);
+                        monitor.addSuccess();
                         progressBar.setProgress(progressBar.getProgress() + 1);
                     }
                 });
@@ -161,6 +161,15 @@ public class ImageUploadActivity extends BaseActivity implements View.OnClickLis
         } catch (Exception e) {
             Toast.show(this, "错误：" + e.toString());
             dialog.dismiss();
+        }
+    }
+
+    private void resetSelect(ImageItem imageItem) {
+        for (SelectItem item : mAdapter.getItems()) {
+            if (item.getBean() == imageItem) {
+                item.setHasSelect(false);
+                return;
+            }
         }
     }
 

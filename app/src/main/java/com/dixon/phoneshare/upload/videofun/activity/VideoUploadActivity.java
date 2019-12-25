@@ -116,6 +116,7 @@ public class VideoUploadActivity extends BaseActivity implements View.OnClickLis
             Toast.show(this, "请先勾选要上传的视频");
             return;
         }
+        Log.e("UploadVideo", mSelectItems.toString());
         CustomDialog dialog = DialogUtil.showProcessDialog(this);
         if (dialog == null) {
             return;
@@ -153,9 +154,10 @@ public class VideoUploadActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onSuccess() {
+                        mSelectItems.remove(item);
+                        resetSelect(item);
                         monitor.addSuccess();
                         // 上传成功 从勾选状态移除
-                        mSelectItems.remove(item);
                         progressBar.setProgress(progressBar.getProgress() + 1);
                     }
                 });
@@ -163,6 +165,15 @@ public class VideoUploadActivity extends BaseActivity implements View.OnClickLis
         } catch (Exception e) {
             Toast.show(this, "错误：" + e.toString());
             dialog.dismiss();
+        }
+    }
+
+    private void resetSelect(VideoItem imageItem) {
+        for (SelectItem item : mAdapter.getItems()) {
+            if (item.getBean() == imageItem) {
+                item.setHasSelect(false);
+                return;
+            }
         }
     }
 }

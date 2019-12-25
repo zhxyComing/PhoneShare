@@ -74,12 +74,16 @@ public class ClientNetUtil {
         sClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                listener.onFail(e);
+                HandlerUtil.runOnUiThread(() -> listener.onFail(e));
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                listener.onSuccess();
+                if (response.isSuccessful()) {
+                    HandlerUtil.runOnUiThread(listener::onSuccess);
+                } else {
+                    HandlerUtil.runOnUiThread(() -> listener.onFail(new Exception("错误：" + response.code())));
+                }
             }
         });
     }
